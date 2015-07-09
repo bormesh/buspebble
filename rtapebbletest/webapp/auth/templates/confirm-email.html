@@ -1,0 +1,91 @@
+{% extends 'framework_templates/base.html' %}
+
+{% block title %}Confirm Email{% endblock %}
+
+{% block main %}
+
+{% if errors and 'general' in errors %}
+<h2>{{ errors.general }}</h2>
+{% endif %}
+
+<form action="/confirm-email" method="POST" class="form-skinny">
+
+<label for="email_address">Email address</label>
+
+<p>
+{% if values and values.email_address %}
+<input type="email"
+    name="email_address"
+    id="email_address"
+    required
+    value="{{ values.email_address }}"
+    placeholder="joe@example.com"
+    class = "input-block-level" />
+
+{% else %}
+<input type="email" name="email_address" id="email_address" required
+    placeholder="joe@example.com" class="input-block-level" />
+{% endif %}
+
+{% if errors and errors.get('email_address') %}
+<span>{{ errors.email_address }}</span>
+{% endif %}
+</p>
+
+<label for="challenge_question">Password Reset Security Challenge question</label>
+
+<select class="form-control" name="challenge_question" required>
+    <option value="What was your childhood nickname?">What was your childhood nickname?</option>
+    <option value="What is the name of your favorite childhood friend?">What is the name of your favorite childhood friend?</option>
+    <option value="What street did you live on in third grade?">What street did you live on in third grade?</option>
+</select>
+
+{% if errors and errors.get('challenge_question') %}
+<span>{{ errors.challenge_question }}</span>
+{% endif %}
+
+<label for="challenge_question">Password Reset Security Challenge Answer</label>
+
+<input type="text" name="challenge_question_answer" id="challenge_question_answer" required
+        class="input-block-level" />
+
+{% if errors and errors.get('challenge_question_answer') %}
+<span>{{ errors.challenge_question_answer }}</span>
+{% endif %}
+
+{% if values and values.nonce %}
+<input type="hidden"
+    name="nonce"
+    id="nonce"
+    required
+    value="{{ values.nonce }}"
+    placeholder="Check your email"
+    class="input-block-level" />
+
+{% else %}
+<input type="text" name="nonce" id="nonce" required
+    placeholder="Check your email" class="input-block-level" />
+{% endif %}
+
+{% if errors and errors.get('nonce') %}
+<span>{{ errors.nonce }}</span>
+{% endif %}
+</p>
+<p>
+<button class="btn btn-large btn-primary" type="submit">Confirm sign-up
+</button>
+</p>
+<p>
+<a href="/send-new-confirm-email">Need another confirm email?</a>
+</p>
+
+</form>
+{% endblock main %}
+
+{% block scripts %}
+<script>
+$(document).ready(function () {
+    $("input:submit").button();
+});
+</script>
+{% endblock scripts %}

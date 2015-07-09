@@ -1,0 +1,28 @@
+<dl>
+
+{% for field, field_label in [
+
+    ('display_name', 'Display name'),
+    ('biography', 'Biography'),
+    ('phone_number_one', 'First phone number'),
+    ('phone_number_two', 'Second phone number'),
+    ('twitter_page', 'Twitter page'),
+    ('facebook_page', 'Facebook page'),
+    ('pinterest_page', 'Pinterest page'),
+    ('email_address', 'Email address'),
+    ('street_address_line_one', 'Street address line one'),
+    ('street_address_line_two', 'Street address line two'),
+    ('city', 'City'),
+    ('state', 'State'),
+    ('zipcode', 'Zip code'),
+    ]
+%}
+
+{% if req.user[field] %}
+<dt>{{ field_label }}</dt>
+<dd>{{ req.user[field] }}</dd>
+{% endif %}
+
+{% endfor %}
+
+</dl>

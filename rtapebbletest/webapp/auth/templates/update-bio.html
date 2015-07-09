@@ -1,0 +1,33 @@
+<form action="/update-bio" method="POST">
+
+{% if errors and errors.general %}
+<p>
+{{ errors.general }}
+{% endif %}
+
+<h2>Update biography</h2>
+
+<p>Write a sentence or two about yourself.</p>
+
+<p>
+<label>Biography
+
+{% if biography %}
+<textarea name="biography">{{ biography }}</textarea>
+
+{% elif values and values.biography %}
+<textarea name="biography">{{ values.biography }}</textarea>
+
+{% else %}
+<textarea name="biography" placeholder="Put stuff here"></textarea>
+{% endif %}
+
+{% if errors and errors.biography %}
+<span class="form_error">{{ errors.biography }}</span>
+{% endif %}
+</label>
+
+<p>
+<input type="submit" value="Update bio" />
+
+</form>

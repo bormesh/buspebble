@@ -1,0 +1,49 @@
+{% extends 'framework_templates/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block main %}
+
+<h1>Send Confirm Email</h1>
+
+{% if errors and errors.general %}
+<h2>{{ errors.general }}</h2>
+{% endif %}
+
+<p>If you already registered and lost the confirmation email, give us
+your email again and we'll send a new one.
+
+<form action="/send-new-confirm-email" method="POST">
+
+<p>
+{% if values and values.email_address %}
+<input type="email"
+    name="email_address"
+    id="email_address"
+    required
+    value="{{ values.email_address }}"
+    placeholder="joe@example.com" />
+
+{% else %}
+<input type="email"
+    name="email_address"
+    id="email_address"
+    required
+    placeholder="joe@example.com" />
+{% endif %}
+
+<p>
+<input type="submit" value="Send it again!" />
+
+
+</form>
+
+{% endblock main %}
+
+{% block scripts %}
+<script>
+$(document).ready(function () {
+    $("input:submit").button();
+});
+</script>
+{% endblock scripts %}

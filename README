@@ -1,0 +1,17 @@
+++++++++
+rtapebbletest
+++++++++
+
+Read INSTALL for installation instructions.
+
+Code outline
+============
+
+webapp/ holds the code that handles web requests.
+
+pg/ holds the code related to talking to postgresql.
+
+scripts/ holds a bunch of command-line scripts.
+
+
+.. vim: set syntax=rst:

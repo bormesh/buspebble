@@ -1,0 +1,22 @@
+{
+  "name": "gift-gram",
+  "version": "0.0.0",
+  "authors": [
+    "W. Matthew Wilson <matt@216software.com>"
+  ],
+  "license": "private",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "knockout": "~3.1.0",
+    "font-awesome": "~4.1.0",
+    "jquery-ui": "~1.11.0"
+  }
+}

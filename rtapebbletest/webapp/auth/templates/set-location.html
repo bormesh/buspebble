@@ -1,0 +1,77 @@
+{% extends 'framework_templates/base.html' %}
+
+{% block title %}Set My Location{% endblock %}
+
+{% block scripts %}
+<script
+    src="https://maps.googleapis.com/maps/api/js?sensor=false"
+    type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var my_latitude = {{ latitude}};
+var my_longitude = {{ longitude}};
+
+$(document).ready(function () {
+
+    var my_latlng = new google.maps.LatLng(my_latitude, my_longitude);
+
+    var mapOptions = {
+        zoom: 13,
+        center: my_latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    // var map_goes_here = $("#map-goes-here")[0];
+    var map_goes_here = document.getElementById("map-goes-here");
+
+    var map = new google.maps.Map(
+        map_goes_here,
+        mapOptions);
+
+    var marker = new google.maps.Marker({
+        position: my_latlng,
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        title: "my location"
+    });
+
+    google.maps.event.addListener(marker, 'dragend', function () {
+
+        var new_pos = marker.getPosition();
+
+        $("#update-location input[name=latitude]").val(new_pos.lat());
+        $("#update-location input[name=longitude]").val(new_pos.lng());
+
+        var save_it = confirm("set this as your new location?");
+
+        if (save_it) {
+
+            $("#update-location").submit();
+
+            alert("saving your location...");
+
+        }
+
+    });
+
+});
+
+</script>
+{% endblock scripts %}
+
+{% block main %}
+<h2>Set my location</h2>
+
+<p>Drag the marker to the right spot for your location.
+
+<form id="update-location" action="/update-location" method="POST">
+
+<input type="hidden" name="latitude" value="{{ latitude }}" />
+<input type="hidden" name="longitude" value="{{ longitude }}" />
+
+</form>
+
+<div id="map-goes-here" style="height:400px;width:600px;">MAP GOES HERE</div>
+{% endblock main %}

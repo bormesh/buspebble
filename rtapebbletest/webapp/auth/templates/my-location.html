@@ -1,0 +1,81 @@
+{% if req.user.latitude and req.user.longitude %}
+<script
+    src="https://maps.googleapis.com/maps/api/js?sensor=false"
+    type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var my_latitude = {{ req.user.latitude}};
+var my_longitude = {{ req.user.longitude}};
+
+$(document).ready(function () {
+
+    var my_latlng = new google.maps.LatLng(my_latitude, my_longitude);
+
+    var mapOptions = {
+        zoom: 13,
+        center: my_latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    // var map_goes_here = $("#map-goes-here")[0];
+    var map_goes_here = document.getElementById("map-goes-here");
+
+    var map = new google.maps.Map(
+        map_goes_here,
+        mapOptions);
+
+    var marker = new google.maps.Marker({
+        position: my_latlng,
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        title: "my location"
+    });
+
+    google.maps.event.addListener(marker, 'dragend', function () {
+
+        var new_pos = marker.getPosition();
+
+        $("#update-location input[name=latitude]").val(new_pos.lat());
+        $("#update-location input[name=longitude]").val(new_pos.lng());
+
+        var save_it = confirm("set this as your new location?");
+
+        if (save_it) {
+
+            $("#update-location").submit();
+
+            alert("saving your location...");
+
+        }
+
+    });
+
+});
+
+</script>
+
+<h2>My location</h2>
+
+
+<form id="update-location" action="/update-location" method="POST">
+
+<input type="hidden" name="latitude" value="{{ req.user.latitude or "" }}" />
+<input type="hidden" name="longitude" value="{{ req.user.longitude or "" }}" />
+
+</form>
+
+<div id="map-goes-here" style="height:400px;width:600px;">MAP GOES HERE</div>
+
+{% else %}
+<form action="/geocode-address" method="GET">
+
+<input type="text" name="address_string"
+    value="{{ req.user.address_string }}" />
+
+<input type="submit" value="See this address on a map" />
+
+</form>
+
+{% endif %}

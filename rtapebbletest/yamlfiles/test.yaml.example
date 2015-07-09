@@ -1,0 +1,61 @@
+# Copy this file to test.yaml and then change the credentials inside to
+# whatever you want.  I set up git to ignore the test.yaml, so that each
+# box can have its own test.yaml file.
+#
+# If you can think of a better solution, let me know.
+
+postgresql:
+    database: rtapebbletest_test
+    host: localhost
+    port: 5432
+    user: rtapebbletest
+    password: fr1pp3ry
+
+logging:
+
+    default: &defaultlogging
+
+        # This is the catch-all.
+        # root:
+        #     level: DEBUG
+        #     handlers: [console, tmpfile]
+
+        loggers:
+            rtapebbletest: &rtapebbletestlogging
+                propagate: False
+                level: DEBUG
+                handlers: [console, tmpfile]
+
+            werkzeug: *rtapebbletestlogging
+
+            horsemeat: *rtapebbletestlogging
+
+        disable_existing_loggers: false
+
+        version: 1
+
+        handlers:
+
+            console:
+                class: logging.StreamHandler
+                level: DEBUG
+                formatter: consolefmt
+
+            tmpfile:
+                class: logging.FileHandler
+                filename: /tmp/rtapebbletest-test.log
+                mode: a
+                level: DEBUG
+                formatter: consolefmt
+
+        formatters:
+            consolefmt:
+                format: '%(asctime)-22s [%(process)d] %(name)-30s %(lineno)-5d %(levelname)-8s %(message)s'
+
+    script: *defaultlogging
+
+app:
+    scheme:     http
+    host:       test.rtapebbletest.com
+
+# vim: set filetype=yaml :

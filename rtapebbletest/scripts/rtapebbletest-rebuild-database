@@ -1,0 +1,26 @@
+#! /bin/bash -e
+
+if (( $# != 1 ))
+then
+
+    echo "usage: $0 yaml_file"
+    exit 99;
+
+else
+
+    DBNAME=`rtapebbletest-config $1 database_name`
+    DBUSER=`rtapebbletest-config $1 database_user`
+
+    sudo -u postgres dropdb --if-exists $DBNAME
+    sudo -u postgres createdb --owner $DBUSER $DBNAME
+    sudo -u postgres createlang plpythonu $DBNAME
+    sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "hstore";'
+    sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "uuid-ossp";'
+    sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "pgcrypto";'
+    sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "citext";'
+    sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c "create extension btree_gist;"
+
+    echo "Now run rtapebbletest-upgrade-database $1"
+
+fi
+

@@ -1,0 +1,10 @@
++++++++++++++++++++
+Questions for Steve
++++++++++++++++++++
+
+*   Do we need to drain the sump to set the minimum level?
+
+*   Do we constantly run the refractometer pump?
+
+*   Do we explicitly tell the pump OPEN and then CLOSE, or do we pass in
+    an OPEN command and a number of seconds?

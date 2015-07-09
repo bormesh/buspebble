@@ -1,0 +1,74 @@
+{% extends "framework_templates/base.html" %}
+
+{% block title %}Scratch{% endblock %}
+
+{% block main %}
+<h1>Scratch</h1>
+
+<div class="row">
+
+<div class="col-md-4">
+
+<div class="form-group">
+<label>Pick date dt1</label>
+<input type="text" name="dt1"
+    data-bind="datepicker: dtfield1"
+    class="form-control"></input>
+</div>
+
+<div class="form-group">
+<label>Pick date dt2</label>
+<input type="text" name="dt2"
+    data-bind="datepicker: dtfield2"
+    class="form-control"></input>
+</div>
+</div>
+
+<div class="col-md-4">
+<dl>
+<dt>dt field 1</dt>
+<dd data-bind="text: dtfield1"></dd>
+
+<dt>dt field 2</dt>
+<dd data-bind="text: dtfield2"></dd>
+</dl>
+</div>
+
+<div class="col-md-4">
+<h2>popover fun</h2>
+
+<button class="btn btn-default"
+    data-toggle="popover"
+    data-content="blargh">PHI</button>
+
+<button type="button" class="btn btn-default" data-container="body"
+    data-toggle="popover"
+    data-placement="top"
+    data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  Popover on top
+</button>
+
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+
+var ScratchViewModel = function () {
+
+    var self = this;
+
+    self.dtfield1 = ko.observable('2012-01-31');
+    self.dtfield2 = ko.observable();
+
+};
+
+$(document).ready(function () {
+    ko.applyBindings(new ScratchViewModel());
+    $("button").popover();
+});
+</script>
+{% endblock scripts %}

@@ -1,0 +1,116 @@
+++++++++++++++++++++
+INSTALL INSTRUCTIONS
+++++++++++++++++++++
+
+First step
+==========
+
+Follow instructions in docs/new-box-checklist.txt.
+
+After that
+==========
+
+::
+
+    $ cd python-code
+    $ pip install -r requirements.txt
+
+Apache configs
+==============
+
+::
+
+    $ sudo apt-get install apache2 apache2-mpm-worker apache2-utils apache2.2-bin apache2.2-common libapache2-mod-proxy-html
+    $ sudo cp apache2/{{ something }}.conf /etc/apache2/sites-available/
+    $ sudo vi /etc/apache2/sites-available/{{ something }}.conf # read comments for sections to edit
+    $ sudo a2ensite {{ something }}.conf
+    $ sudo a2enmod proxy
+    $ sudo a2enmod rewrite
+    $ sudo a2enmod proxy_http
+    $ sudo service apache2 restart
+
+Database
+========
+
+Become the postgres user::
+
+    $ sudo su postgres
+    $ createuser --pwprompt rtapebbletest
+    $ createdb --owner rtapebbletest rtapebbletest_dev # _dev could be _prod or something else!
+    $ createlang plpythonu rtapebbletest_dev
+    $ psql -d rtapebbletest_dev -c 'create extension "hstore";'
+    $ psql -d rtapebbletest_dev -c 'create extension "uuid-ossp";'
+    $ psql -d rtapebbletest_dev -c 'create extension "pgcrypto";'
+    $ psql -d rtapebbletest_dev -c 'create extension "citext";'
+    $ exit
+
+YAML
+====
+
+*   Copy dev.yaml.example to something like dev.yaml.
+*   Edit dev.yaml and put in the postgresql user, database, and password.
+
+Then::
+
+    $ cd database-change-scripts
+    $ python upgrade_database.py dev.yaml
+
+Load database tables
+====================
+
+::
+
+    $ cd database-change-scripts
+
+Then edit setup.py to install the run-dev-webapp script.
+
+Then reinstall everything with::
+
+    $ pip install -r requirements.txt
+
+And now, run-dev-webapp should be installed in your path
+
+Install javascript
+==================
+
+::
+
+    $ cd static
+    $ bower install
+
+That will pull down all the javascript libraries we need.
+
+
+Fire it up
+==========
+
+Try this out::
+
+    $ run-dev-webapp
+
+Extras for dev sandbox
+======================
+
+*   Copy test.yaml.example to test.yaml and set up test database.
+
+Extras for production install
+=============================
+
+*   Create a unix user rtapebbletest
+*   Set up supervisord to start on boot using upstart
+*   Fire up everything through supervisor
+*   load the rtapebbletest schema into the database
+*   Set up supervisord to run gunicorn
+*   Set up upstart to make sure supervisord starts on boot
+
+
+Upstart
+=======
+
+edit .conf files in the /etc/init
+
+copy the supervisor conf in the upstart directory
+
+edit to point to correct virtual environment
+
+.. vim: set syntax=rst:

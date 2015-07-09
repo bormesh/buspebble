@@ -1,0 +1,28 @@
+#! /bin/bash -e
+
+# If you get an error like "rtapebbletest-config not found", then you either
+# need to install rtapebbletest globally, or activate the virtualenv where you
+# installed rtapebbletest.
+#
+# If you're running this from supervisord, just set the env PATH to
+# point to your .virtualenvs/blargh/bin folder.
+
+if (( $# != 1 ))
+then
+
+    echo "usage: $0 yaml_file"
+    exit 99;
+
+else
+
+    PORT=`rtapebbletest-config $1 webapp_port`
+    PIDFILE=`rtapebbletest-config $1 pidfile`
+
+    exec gunicorn \
+    --debug \
+    --workers 1 \
+    --bind 127.0.0.1:$PORT \
+    --pid $PIDFILE \
+    rtapebbletest.configwrapper:ConfigWrapper.load_yaml\(\"$1\"\).build_webapp\(\)
+
+fi

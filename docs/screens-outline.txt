@@ -1,0 +1,40 @@
+History screen
+==============
+
+Should show the company Company TactAir logo
+
+*   uptime
+*   current level of coolant
+*   current concentration
+*   chart / table showing historical mixture level
+*   chart / table showing historical concentration
+*   chart / table showing each valve's open / closed
+*   water usage over time
+
+Real-time screen
+================
+
+Pump activity screen
+====================
+
+Ugly Log screen
+===============
+
+Show most recent
+
+
+Admin section
+=============
+
+This screen requires a password
+
+Use this screen to set:
+
+*   set refill percentage
+*   set amount of time to run air into chamber
+*   read the current value of mixture level as new maximum
+*   link to zip file of all historical information.
+*   goal water / coolant concentration
+
+
+.. vim: set syntax=rst:

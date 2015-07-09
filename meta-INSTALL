@@ -1,0 +1,12 @@
+This is how to install a project based on frippery.  Pretend you're
+making a project named "wendy"::
+
+    $ git archive HEAD --format=zip -o frippery.zip --remote=ssh://matt@jan.216software.com/var/git-bare-repositories/frippery
+    $ unzip -d wendy frippery.zip
+    $ cd wendy
+    $ find -name frippery | xargs rename 's/frippery/wendy/'
+    $ find -type f | xargs sed -i 's/Frippery/Wendy/g'
+    $ find -type f | xargs sed -i 's/frippery/wendy/g'
+
+
+.. vim: set syntax=rst:

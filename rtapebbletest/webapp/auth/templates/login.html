@@ -1,0 +1,96 @@
+{% extends 'framework_templates/base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block main %}
+
+<!--
+<p>Jalapeño
+-->
+
+{% if errors is defined and errors.get('general') %}
+<h2>{{ errors.general }}</h2>
+
+<p>You can only log in after you've confirmed your email address.
+
+<p><a href="/send-new-confirm-email">Do
+you need us to send a confirm email again?</a> </p>
+{% endif %}
+
+<form action="/login" method="POST" class="form-skinny">
+
+
+<h2 class="form-signin-heading">Please login</h2>
+<label for="email_address">Email Address</label>
+
+{% if values is defined and values.get('email_address') %}
+<input type="email"
+    name="email_address"
+    id="email_address"
+    required
+    value="{{ values.email_address }}"
+    placeholder="joe@example.com"
+    class="input-block-level" />
+
+{% else %}
+<input type="email" name="email_address" id="email_address" required
+    placeholder="joe@example.com" class="input-block-level" />
+{% endif %}
+
+{% if errors is defined and errors.get('email_address') %}
+<span>{{ errors.email_address }}</p>
+{% endif %}
+
+<p>
+<label for="password">Password</label>
+
+<p>
+{% if values is defined and values.get('password') %}
+<input type="password" name="password" id="password" class="input-block-level" autocomplete="off"
+    required value="{{ values.password }}"
+/>
+{% else %}
+<input type="password" name="password" id="password" class="input-block-level"      required  autocomplete="off"/>
+{% endif %}
+
+{% if errors is defined and errors.get('password') %}
+<span>{{ errors.password }}</p>
+{% endif %}
+
+<p>
+<button data-loading-text="Loading..."
+    class="btn btn-large btn-primary"
+    type="submit">Log In</button>
+</p>
+
+<p>
+<a href="/forgot-password">Forgot your password?</a>
+</p>
+
+<!--
+<p>
+<a href="/register">Need to sign up?</a>
+</p>
+-->
+
+<p>
+<a href="/send-new-confirm-email">Need another confirm email?</a>
+</p>
+<P>
+    Release: 2014.Spring.0
+</P>
+</form>
+{% endblock main %}
+
+{% block scripts %}
+<script>
+$(document).ready(function () {
+    $("button").on('click', function (e) {
+        $(this).button('loading');
+    })
+    $('input[type=password]').bind('copy paste cut drag drop', function (e) {
+        e.preventDefault();
+    });
+});
+</script>
+{% endblock scripts %}

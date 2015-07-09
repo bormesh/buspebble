@@ -1,0 +1,66 @@
+{% extends "framework/base.html" %}
+
+{% block title %}Handlers{% endblock %}
+
+{% block main %}
+<h1>Handlers</h1>
+
+<table class="table table-condensed table-hover table-striped table-bordered">
+
+<thead>
+
+<tr>
+<th>
+Handler
+</th>
+
+<th>
+Module</th>
+
+<th>
+Route Strings
+</th>
+
+<th>
+Route Patterns
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+{% for h in handler_list %}
+
+<tr>
+
+<td>
+{{ h.__class__.__name__ }}
+<a class="small"
+    href="/handler-code?handler_name={{ h.__class__.__name__ }}">source</a>
+</td>
+
+<td>
+{{ h.__class__.__module__ }}
+
+<td>
+{{ getattr(h, 'route_strings', None) }}
+</td>
+
+<td>
+{% set route_patterns = getattr(h, 'route_patterns', []) %}
+<ul>
+{% for rp in route_patterns %}
+<li>{{ getattr(rp, 'pattern', rp) }}</li>
+{% endfor %}
+</ul>
+</td>
+
+</tr>
+
+{% endfor %}
+</tbody>
+
+</table>
+
+{% endblock %}

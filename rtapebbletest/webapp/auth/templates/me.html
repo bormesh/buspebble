@@ -1,0 +1,27 @@
+{% extends 'framework_templates/base.html' %}
+
+{% block title %}My Account{% endblock %}
+
+{% block main %}
+    {% if ninety_days is defined and ninety_days==true %}
+<span><h3>It has been 90 Days since you last changed your password. You must change it now.</h3></span>
+{% endif %}
+
+<h1>My Account</h1>
+
+{% include 'auth/update-displayname.html' %}
+
+
+
+{% include 'auth/change-password.html' %}
+{% endblock main %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $("form").on('submit', function (e) {
+        $(this).find('button').button('loading');
+    });
+});
+</script>
+{% endblock scripts %}

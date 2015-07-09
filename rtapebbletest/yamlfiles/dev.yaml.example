@@ -1,0 +1,74 @@
+app:
+    secret:                     2908 Coleridge
+    host:                       rtapebbletest
+    scheme:                     http
+    launch_debugger_on_error:   False
+
+smtp:
+    host: &smtphost  localhost
+
+postgresql:
+    database:   rtapebbletest_dev
+    host:       localhost
+    port:       5432
+    user:       rtapebbletest
+    password:   fr1pp3ry
+
+logging:
+
+    default: &defaultlogging
+
+        # This is the catch-all.
+        # root:
+        #     level: DEBUG
+        #     handlers: [console, tmpfile]
+
+        loggers:
+            rtapebbletest: &rtapebbletestlogging
+                propagate: False
+                level: DEBUG
+                handlers: [console, tmpfile]
+
+            werkzeug: *rtapebbletestlogging
+
+            horsemeat: *rtapebbletestlogging
+
+        disable_existing_loggers: false
+
+        version: 1
+
+        handlers:
+
+            console:
+                class: logging.StreamHandler
+                level: DEBUG
+                formatter: consolefmt
+
+            tmpfile:
+                class: logging.FileHandler
+                filename: /tmp/rtapebbletest.log
+                mode: a
+                level: DEBUG
+                formatter: consolefmt
+
+            email:
+                level: CRITICAL
+                formatter: consolefmt
+                class: logging.handlers.SMTPHandler
+                mailhost: *smtphost
+
+                fromaddr: rtapebbletest@rtapebbletest.216software.com
+
+                toaddrs:
+                    - info@216software.com
+
+                subject: production error
+
+        formatters:
+            consolefmt:
+                format: '%(asctime)-22s [%(process)d] %(name)-30s %(lineno)-5d %(levelname)-8s %(message)s'
+
+    script: *defaultlogging
+
+
+# vim: set filetype=yaml :

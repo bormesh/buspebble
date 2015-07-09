@@ -1,0 +1,10 @@
+# Add your SQL scripts in here.  It is OK to put scripts that have
+# already been run in here!  The python script upgrade_database.py will
+# check the horsemeat_schema_version table and skip scripts that have
+# already been run.
+
+setup_script: initial-setup.sql
+
+script_order:
+-   make-people-and-sessions-et-al-tables.sql
+-   insert-test-users.sql

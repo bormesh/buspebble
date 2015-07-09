@@ -1,0 +1,21 @@
+{% extends 'framework_templates/base.html' %}
+
+{% block title %}Log out{% endblock %}
+
+{% block main %}
+
+<h1>Log out</h1>
+
+<form action="/logout" method="POST">
+    <input type="submit" value="Log out" />
+</form>
+
+{% endblock main %}
+
+{% block scripts %}
+<script>
+$(document).ready(function () {
+    $("input:submit").button();
+});
+</script>
+{% endblock scripts %}

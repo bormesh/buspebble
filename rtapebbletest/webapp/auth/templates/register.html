@@ -1,0 +1,125 @@
+{% extends 'framework_templates/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block main %}
+
+<h1>Register</h1>
+
+{% if errors is defined and errors.general %}
+<h2>{{ errors.general }}</h2>
+{% endif %}
+
+<form action="/register" method="POST">
+
+<p>
+<label for="email_address">Email Address</label>
+
+<p>
+{% if values is defined and values.email_address %}
+<input type="email"
+    name="email_address"
+    id="email_address"
+    required
+    value="{{ values.email_address }}"
+    placeholder="joe@example.com" />
+
+{% else %}
+<input type="email" name="email_address" id="email_address" required
+    placeholder="joe@example.com" />
+{% endif %}
+
+{% if errors is defined and errors.email_address %}
+<span>{{ errors.email_address }}</p>
+{% endif %}
+
+<p>
+<label for="display_name">What should we call you?</label>
+
+<p>
+{% if values is defined and values.display_name %}
+<input type="text" name="display_name" id="display_name" required
+    value="{{ values.display_name }}" />
+
+{% else %}
+<input type="text" name="display_name" id="display_name" required />
+
+{% endif %}
+
+{% if errors is defined and errors.display_name %}
+<span>{{ errors.display_name }}</p>
+{% endif %}
+
+<p>
+<label for="password1">Password</label>
+
+<p>
+{% if values is defined and values.password1 %}
+<input type="password" name="password1" id="password1" required
+    value="{{ values.password1 }}" autocomplete="off"
+/>
+{% else %}
+<input type="password" name="password1" id="password1" required autocomplete="off" />
+{% endif %}
+
+{% if errors is defined and errors.password1 %}
+<span>{{ errors.password1 }}</p>
+{% endif %}
+
+<p>
+<label for="password2">Confirm password</label>
+
+<p>
+{% if values is defined and values.password2 %}
+<input type="password" name="password2" id="password2" required
+    value="{{ values.password2 }}" autocomplete="off"
+/>
+{% else %}
+<input type="password" name="password2" id="password2" required autocomplete="off"/>
+{% endif %}
+
+{% if errors is defined and errors.password2 %}
+<span>{{ errors.password2 }}</p>
+{% endif %}
+
+<p>
+<input type="submit" value="Sign me up!" />
+
+</form>
+
+<p>If you already registered and lost the confirmation email, give us
+your email again and we'll send a new one.
+
+<form action="/send-new-confirm-email" method="POST">
+
+<p>
+{% if values is defined and values.email_address %}
+<input type="email"
+    name="email_address"
+    id="email_address"
+    required
+    value="{{ values.email_address }}"
+    placeholder="joe@example.com" />
+
+{% else %}
+<input type="email"
+    name="email_address"
+    id="email_address"
+    required
+    placeholder="joe@example.com" />
+{% endif %}
+
+<p>
+<input type="submit" value="Send it again!" />
+
+</form>
+
+{% endblock main %}
+
+{% block scripts %}
+<script>
+$(document).ready(function () {
+    $("input:submit").button();
+});
+</script>
+{% endblock scripts %}

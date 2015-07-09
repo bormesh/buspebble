@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>{% block title %}Mockups{% endblock %}</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet"
+    href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+    href="/static/bower_components/font-awesome/css/font-awesome.min.css">
+
+<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/static/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/static/bower_components/knockout/dist/knockout.js"></script>
+
+{% block styles %}
+{% endblock styles %}
+
+</head>
+
+<body>
+
+{% include 'mockups/_navbar.html' %}
+
+<div id="main">
+<div class="container">
+
+{% block main %}
+{% endblock main %}
+
+</div><!-- closes div class="container" -->
+</div><!-- closes div class="main" -->
+
+{% block scripts %}
+{% endblock %}
+
+</body>
+
+</html>
+
+{# vim: set syntax=htmldjango: #}

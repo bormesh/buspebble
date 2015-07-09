@@ -1,0 +1,7 @@
+#! /bin/bash
+
+exec gunicorn
+--debug \
+--workers 1 \
+--pid /tmp/dev.rtapebbletest.pid \
+rtapebbletest.configwrapper:ConfigWrapper.from_yaml_file_name\(\"dev.yaml\"\).build_webapp\(\)
