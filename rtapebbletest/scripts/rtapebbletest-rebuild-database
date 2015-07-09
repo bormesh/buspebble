@@ -18,6 +18,7 @@ else
     sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "uuid-ossp";'
     sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "pgcrypto";'
     sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "citext";'
+    sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c 'create extension "ltree";'
     sudo -u postgres psql --quiet --no-psqlrc -d $DBNAME -c "create extension btree_gist;"
 
     echo "Now run rtapebbletest-upgrade-database $1"

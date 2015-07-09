@@ -40,7 +40,7 @@ def find_new_scripts(script_order, already_ran_scripts):
             sql_script_name))
 
         absolute_path = pkg_resources.resource_filename(
-            "rtapebbletest", "pgscripts/{0}".format(sql_script_name))
+            "rtapebbletest", "database-change-scripts/{0}".format(sql_script_name))
 
         just_the_file = os.path.basename(absolute_path)
 
@@ -159,7 +159,7 @@ def maybe_run_setup_script(pgconn, setup_script):
         env["PGOPTIONS"] = "--client-min-messages=warning"
 
         path_to_setup_script = pkg_resources.resource_filename(
-            "rtapebbletest", "pgscripts/{0}".format(setup_script))
+            "rtapebbletest", "database-change-scripts/{0}".format(setup_script))
 
         subprocess.check_call([
                 "psql",
@@ -190,7 +190,7 @@ if __name__ == '__main__':
 
     d = yaml.safe_load(pkg_resources.resource_stream(
         "rtapebbletest",
-        "pgscripts/script-run-order.yaml"))
+        "database-change-scripts/script-run-order.yaml"))
 
     maybe_run_setup_script(
         cw.get_pgconn(),
