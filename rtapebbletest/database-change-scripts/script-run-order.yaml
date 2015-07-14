@@ -8,3 +8,4 @@ setup_script: initial-setup.sql
 script_order:
 -   make-people-and-sessions-et-al-tables.sql
 -   insert-test-users.sql
+-   make-routes-and-stops-table.sql

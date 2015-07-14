@@ -35,6 +35,11 @@ class ConfigWrapper(configwrapper.ConfigWrapper):
         psycopg2.extras.register_composite('people', pgconn,
           factory=PersonFactory)
 
+        from rtapebbletest.pg.stops import StopsFactory
+
+        psycopg2.extras.register_composite('stops', pgconn,
+          factory=StopFactory)
+
         log.info('Just registered composite types in psycopg2')
 
         return pgconn
