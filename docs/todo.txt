@@ -1,0 +1,58 @@
+++++
+TODO
+++++
+
+.. contents::
+
+Rob's work in progress
+======================
+
+*   After logging out, erase the raw_password setting.
+
+*   Do the rest of the stuff in the `Authentication`_ section.
+
+*   Figure out how to highlight the nav link to the currently viewed
+    page.
+
+    For example if we're on /#weekly-manifests, highlight that link in
+    the navbar by setting the CSS class "active".
+
+    This is one way to look up the current ID, but there's likely a more
+    elegant approach:
+
+        pager.activePage$().getId()
+
+Metric's
+========
+*   I'd like to capture the following Metric's:
+
+    *   Longest wait time for a given stop
+    *   Average wait times for each stop
+    *   ? Are rush hour buses generally slower?
+    *   How does the day affect the metric?
+
+*   Make chart's for the above metric -- I think that
+    would help to illustrate how powerful the data is
+
+*   Talk about other things we might want to measure
+
+    *   Some routes have later predicted times and then come back to
+    schedule -- that's a good metric for how well we're actually able
+    to predict
+
+    *   This is just a weeks worth of data -- what metrics could we
+    capture over weeks?
+
+    *   If a bus is consistently over it's scheduled time, what does
+        that say about the scheduled time?
+
+
+
+Rebuild HTML version of this file
+=================================
+
+ like so::
+
+    $ rst2html5 --bootstrap-css --stylesheet todo.css todo.txt todo.html
+
+.. vim: set syntax=rst:

@@ -17,7 +17,7 @@ import textwrap
 import traceback
 import urllib2
 
-from rtapebbletest.pg import rssfeeds
+from rtapebbletest.pg import stops
 
 from rtapebbletest import configwrapper
 
@@ -40,15 +40,15 @@ if __name__ == "__main__":
 
     pgconn = cw.get_pgconn()
 
-    stops = stops.Stop.get_list_of_stops_to_check(pgconn)
+    stops = stops.Stop.all_stops(pgconn)
 
     log.debug("Found {0} stops to check".format(len(stops)))
     for stop in stops:
 
-        log.debug("Now checking stop times for {0}".format(stop.title))
+        log.debug("Now checking stop times for {0}".format(stop))
 
         try:
-            feed.check_and_insert_stop_predictions(pgconn)
+            stop.check_and_insert_stop_predictions(pgconn)
 
         except Exception as e:
             log.error(e)
@@ -61,4 +61,4 @@ if __name__ == "__main__":
     # Do final commit to store new articles
     pgconn.commit()
 
-    log.debug("Feed checking completed")
+    log.debug("Stop checking completed")

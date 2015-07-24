@@ -1,0 +1,19 @@
+body
+{
+    max-width: 60em;
+    margin: auto;
+}
+
+@media (max-width: 1000px) {
+    body {
+        font-size:18px;
+    }
+}
+
+img
+{
+    display:block;
+    margin:auto;
+    margin-top:50px;
+    margin-bottom:50px;
+}
