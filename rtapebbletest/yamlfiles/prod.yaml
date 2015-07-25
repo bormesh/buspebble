@@ -1,0 +1,83 @@
+postgresql:
+    database:   &dbname buspebble_prod
+    host:       &dbhost localhost
+    port:       &dbport 5432
+    user:       &dbuser buspebble
+    password:   &dbpass bu5p3bb13
+
+logging:
+
+    default: &defaultlogging
+
+        # This is the catch-all.
+        root:
+            level: DEBUG
+            handlers: [pg]
+
+        loggers:
+            rtapebbletest: &rtapebbletestlogging
+                propagate: False
+                level: DEBUG
+                handlers: [console, pg, tmpfile]
+
+            horsemeat: *rtapebbletestlogging
+
+        disable_existing_loggers: false
+
+        version: 1
+
+        handlers:
+
+            pg:
+                class:          logtopg.PGHandler
+                level:          DEBUG
+                log_table_name: rtapebbletestlogs
+                database:       *dbname
+                host:           *dbhost
+                user:           *dbuser
+                password:       *dbpass
+
+            console:
+                class: logging.StreamHandler
+                level: DEBUG
+                formatter: colorfmt
+
+            tmpfile:
+                class: logging.FileHandler
+                filename: /tmp/rtapebbletest.log
+                mode: a
+                level: DEBUG
+                formatter: boringfmt
+
+        formatters:
+
+            boringfmt:
+                format: "%(asctime)-22s [%(process)d] %(name)-30s %(lineno)-5d %(levelname)-8s %(message)s"
+
+            colorfmt:
+                (): "colorlog.ColoredFormatter"
+
+                # format: "%(log_color)s%(levelname)-8s%(reset)s %(blue)s%(message)s"
+
+                format: "%(log_color)s%(asctime)-22s [%(process)d] %(name)-30s %(lineno)-5d %(levelname)-8s %(message)s"
+
+            webappfmt:
+                format: '%(asctime)-22s %(levelname)-8s %(message)s'
+
+
+    script: *defaultlogging
+
+app:
+    secret:                     2908 Coleridge
+    host:                       rob.rtapebbletest.local
+    scheme:                     http
+    launch_debugger_on_error:   False
+    mode:                       dev
+    webapp_port:                6661
+    num_webapp_workers:         1
+    pidfile:                    /tmp/rtapebbletest-webapp.pid
+
+smtp:
+    host:   localhost
+
+# vim: set filetype=yaml :
