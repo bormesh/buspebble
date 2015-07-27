@@ -73,7 +73,7 @@ app:
     scheme:                     http
     launch_debugger_on_error:   False
     mode:                       dev
-    webapp_port:                6661
+    webapp_port:                6664
     num_webapp_workers:         1
     pidfile:                    /tmp/rtapebbletest-webapp.pid
 
