@@ -43,19 +43,31 @@ class PredictedStopTime(Handler):
         prediction, scheduled = stop.get_my_next_predicted_stop_time(pgconn)
 
         if not prediction:
-            prediction = None
-            pretty_prediction = None
+            prediction = ''
             scheduled = stop.get_my_next_scheduled_stop_time(pgconn)
+            now = datetime.datetime.now(scheduled.tzinfo)
+
+            scheduled_dt = datetime.datetime.combine(datetime.datetime.now(),
+                scheduled)
+
+            minutes_until_bus = (scheduled_dt - now).seconds / 60
 
 
+        else:
+            now = datetime.datetime.now(prediction.tzinfo)
+            prediction_dt = datetime.datetime.combine(datetime.datetime.now(),
+                prediction)
 
+            minutes_until_bus = (prediction_dt - now).seconds / 60
+            prediction = prediction.strftime("%H:%M")
 
+        scheduled = scheduled.strftime("%H:%M")
 
         return Response.json(dict(
                 reply_timestamp=datetime.datetime.now(),
                 message="Returning stops for {0}.".format(stop_id),
                 success=True,
-                minutes_until_bus = 5,
+                minutes_until_bus = minutes_until_bus,
                 prediction=prediction,
                 scheduled=scheduled))
 
