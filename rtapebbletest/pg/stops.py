@@ -101,7 +101,7 @@ class Stop(object):
         if not self.rta_internal_route_id:
             self.look_up_rta_route_id(pgconn)
 
-        direction_id = '3' if self.destination == 'Richmond' else '14'
+        direction_id = '14' if self.destination == 'East 89th-Euclid' else '3'
 
         response = requests.post(
             'http://nextconnect.riderta.com/Arrivals.aspx/getStopTimes',
