@@ -214,6 +214,7 @@ class Stop(object):
             from predicted_stop_times
             where stop_id = %(stop_id)s and
             predicted_stop_time > now()::timetz
+            and inserted::date = now()::date
             order by inserted desc
 
             limit 1
@@ -221,10 +222,12 @@ class Stop(object):
        """), {'stop_id':self.stop_id})
 
         if cursor.rowcount:
-            return cursor.fetchone()
+            row = cursor.fetchone()
+
+            return (row.predicted_stop_time, row.scheduled_stop_time)
 
         else:
-            return None
+            return (None, None)
 
     def get_my_next_scheduled_stop_time(self, pgconn):
 
@@ -243,7 +246,7 @@ class Stop(object):
        """), {'stop_id':self.stop_id})
 
         if cursor.rowcount:
-            return cursor.fetchone()
+            return cursor.fetchone().scheduled_stop_time
 
         else:
             return None

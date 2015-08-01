@@ -20,6 +20,7 @@ setup(
         "rtapebbletest/scripts/rtapebbletest-rebuild-database",
         "rtapebbletest/scripts/rtapebbletest-config",
         "rtapebbletest/scripts/rtapebbletest-yaml-example",
+        "rtapebbletest/scripts/check_prediction_times.py",
     ],
 
 )
